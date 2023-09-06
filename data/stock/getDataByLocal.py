@@ -1,7 +1,5 @@
 import pandas as pd
 
-
-
 def daily(code,startDay,endDay):
     """
     从本地csv文件读取代码
@@ -28,7 +26,7 @@ def weekly(code,startDay,endDay):
     :return: 返回以datetime为索引的df
     """
 
-    df = pd.read_csv("weekly/" + code,parse_dates=['trade_date'],index_col=['trade_date'])
+    df = pd.read_csv("/ZA/data/stock/weekly/" + code,parse_dates=['trade_date'],index_col=['trade_date'])
     target_data = df.loc[startDay:endDay]
     return target_data
 def monthly(code,startDay,endDay):
@@ -39,7 +37,7 @@ def monthly(code,startDay,endDay):
     :param endDay: 结束日期
     :return: 返回以datetime为索引的df
     """
-    df = pd.read_csv("monthly/" + code,parse_dates=['trade_date'],index_col=['trade_date'])
+    df = pd.read_csv("/ZA/data/stock/monthly/" + code,parse_dates=['trade_date'],index_col=['trade_date'])
     target_data = df.loc[startDay:endDay]
     return target_data
 

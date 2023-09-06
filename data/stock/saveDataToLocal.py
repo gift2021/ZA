@@ -11,7 +11,7 @@ def daily(code,startDay,endDay):
 def weekly(code,startDay,endDay):
     try:
         df = getByTs.weekly(code, startDay, endDay)
-        df.to_csv('weekly/' + code)
+        df.to_csv('/ZA/data/stock/weekly/' + code)
     except Exception as e:
         print("error:", e)
 
@@ -19,7 +19,7 @@ def weekly(code,startDay,endDay):
 def monthly(code,startDay,endDay):
     try:
         df = getByTs.monthly(code, startDay, endDay)
-        df.to_csv('monthly/' + code)
+        df.to_csv('/ZA/data/stock/monthly/' + code)
     except Exception as e:
         print("error:", e)
 
