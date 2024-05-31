@@ -1,16 +1,12 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import data.stockData as data
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+
+#todo 完善所有的股票数据本地化，python爬虫获取，保存到mongodb中，也许不需要，自己用的，这么专业干什么
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    df = data.daily("000058.SZ", '20230202', '20230210')
+
+    print(df)

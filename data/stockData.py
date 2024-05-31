@@ -51,6 +51,7 @@ def stockList():
     :return:
     """
     pass
+
 if __name__=='__main__':
     df = daily("000058.SZ",'20230202','20230210')
     print(df)
