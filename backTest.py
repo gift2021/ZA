@@ -1,0 +1,69 @@
+import tushare as ts
+
+
+
+ts.set_token('6a340aafdbb9232fbbbab2adf6ec0350bd70bfd87a6bf588972b323e')
+# ts.set_token('303ece62497562396a9420fb0a36201d99f1ba1bd6c7713391a5a041')
+pro = ts.pro_api()
+
+def bkt(ts_code,start_date,end_date,buy,sell):
+    '''
+    简单回测系统，输入代码，开始，结束日期，买入价，卖出价，返回回测收益，模拟资金10w，无手续费,全仓买入模式
+    :param ts_code:股票代码
+    :param start_date:开始交易日期
+    :param end_date:结束交易日期
+    :param buy:买入价
+    :param sell:卖出价
+    :return:交易记录，获利
+    '''
+
+    # 返回record 记录交易记录
+    # 格式：time
+    record = ''
+
+    #hold=1为持有，-1为未持有
+    hold = -1
+
+    #初始收益为0
+    benfite = 0
+
+    #初始本金为10w
+    num = 100000
+
+    #股票数量
+    stack_num = 0
+    price = 0
+
+    # 交易次数
+    flag = 0
+
+    df = pro.daily(ts_code=ts_code, start_date=start_date, end_date=end_date)
+
+    for i in range(len(df)-1,-1,-1):
+        price = df.iloc[i, 2]
+        if price >= sell:
+            if hold == 1:
+                num = num + stack_num*price
+                flag += 1
+                record += str(flag) + ':sell   time:' + df.iloc[i,1] + '   price:' + str(price) + '\n'
+                stack_num = 0
+                hold = -hold
+
+
+
+        else:
+            if price <= buy:
+                if hold == -1:
+                    stack_num = (num//(price*100))*100
+                    num = num - stack_num * price
+                    hold = -hold
+                    flag += 1
+                    record += str(flag) + ':buy   time:' + df.iloc[i, 1] + '   price:' + str(price) + '   stockNum    ' +str(stack_num) + '\n'
+    profit = round(num + stack_num*price -100000)
+    return record,profit
+
+if __name__ == '__main__':
+    record,profit = bkt('000001.SZ','20220101', '20220230',16.21,16.21)
+    print(record)
+    print(profit)
+
