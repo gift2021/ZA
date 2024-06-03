@@ -63,7 +63,7 @@ def bkt(ts_code,start_date,end_date,buy,sell):
     return record,profit
 
 if __name__ == '__main__':
-    record,profit = bkt('000001.SZ','20220101', '20220230',16.21,16.21)
+    record,profit = bkt('000020.SZ','20230101', '20240601',11.118,13.315999999)
     print(record)
     print(profit)
 

@@ -5,12 +5,6 @@ import priceIoc as pic
 
 # 实现遍历所有股票最近收益，从高到低排个序
 
-
-
-# record, profit = bkt.bkt('000058.SZ', '20180101', '20221230', 5.5, 6.5)
-# print(record)
-# print(profit)
-
 df = pd.read_csv('D:\ZA\data\stock\stockList.csv')
 stockList = pd.DataFrame(df)
 
@@ -30,7 +24,11 @@ def test(start_date,end_date):
     flagpro = 0
     for i in range(len(stockList)):
         # 买入和卖出价在一个列表中，对日期内价格进行切分
+        # todo 这里调用一次接口，计算价格区间
         tradeList = pic.priceIoc(stockList.iloc[i,1],start_date,end_date,5)
+
+        if (sum(tradeList)/5) > 20:
+            continue
 
         # # 对切分的价格进行遍历，查找获利最多的价格区间
         for j in range(len(tradeList)):
@@ -40,6 +38,7 @@ def test(start_date,end_date):
                 if(j>k+1):
                     break
                 # 获取回测结果
+                # todo 这里调用一次接口
                 record , profit = bkt.bkt(str(stockList.iloc[i,1]),start_date,end_date,tradeList[j],tradeList[k+1])
 
                 if profit>max:
@@ -53,57 +52,24 @@ def test(start_date,end_date):
         bigProfitList.append([stockList.iloc[i][1],tradeList[flagj],tradeList[flagk],round(flagpro)])
         res += str(stockList.iloc[i, 1]) + '买入，卖出价   ' + str(tradeList[flagj]) + '   ' + str(tradeList[flagk + 1]) \
                + '   获利  ' + str(flagpro) + '\n' + flagrecord
-        print(i)
 
-        if(i == 1):
+        if(i == 50):
             break
-
+        print(i)
     return res,bigProfitList
 
-res,bigProfitList = test('20220101', '20220230')
+res,bigProfitList = test('20230101', '20240601')
+bigProfitList = pd.DataFrame(bigProfitList)
+
+bigProfitList = bigProfitList.drop(0)
+
+bigProfitList.sort_values(by=bigProfitList.columns[3], ascending=False, inplace=True)
+print(bigProfitList)
+bigProfitList.to_csv('output.csv', index=False)  # 保存到CSV文件
+# todo  将排序后的交易记录拿出来，怎么存储是一个问题
+
+# 先跑个100股，看看效果
 
 
-# todo : 排序，pro变成str类型数据，排序
-bigProfitList = np.delete(bigProfitList,0,axis=0)
-
-
-# bigProfitList = np.array([bigProfitList[:,3].astype(int) for i in range(bigProfitList[:,3].shape[1])]).T
-# bigProfitList[:,3] = bigProfitList[:,3].astype(int)
-# bigProfitList[:,3] = np.asarray(bigProfitList[:,3], dtype=int)
-# bigProfitList = np.array(bigProfitList, dtype=str)
-# bigProfitList[:, 3] = bigProfitList[:, 3].astype(int)
-# bigProfitList[:, 2] = bigProfitList[:, 2].astype(float)
-# bigProfitList[:, 1] = bigProfitList[:, 1].astype(float)
-
-
-new_array = [[]]
-# todo   nump库是真tm难用，艹一个bug改2，3个小时，还没改好，睡觉了
-new_array.append(bigProfitList[:, 0].copy())
-new_array.append(bigProfitList[:, 1].copy())
-new_array.append(bigProfitList[:, 2].copy())
-new_array.append(bigProfitList[:, 3].astype(int))
-print(new_array)
-# print(type(new_array[1][3]))
-
-# new_bigProfitList[:, 0] = bigProfitList[:, 0]  # 第一列保持原样
-# new_bigProfitList[:, 1] = bigProfitList[:, 1]  # 第二列转换为float
-# new_bigProfitList[:, 2] = bigProfitList[:, 2]  # 第三列保持原样
-# # new_bigProfitList[:, 3] = bigProfitList[:, 3].astype(int) # 第三列保持原样
-# for i in range(len(bigProfitList)):
-#     new_bigProfitList[i][3] = int(bigProfitList[i][3])
-#     print(type(new_bigProfitList[i][3]))
-#     print(type(int(bigProfitList[i][3])))
-#
-# print(type(new_bigProfitList[1,0]))
-# print(type(new_bigProfitList[1,1]))
-# print(type(new_bigProfitList[1,2]))
-# print(type(new_bigProfitList[0,3]))
-# print(type(new_bigProfitList[1,3].astype(int)))
-
-
-sorted_arr = new_array[new_array[:,3].argsort()]
-
-
-print(sorted_arr)
 
 
