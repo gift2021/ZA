@@ -10,6 +10,8 @@ stockList = pd.DataFrame(df)
 
 bigProfitList = [['000001.SZ',16.21,16.21,4085]]
 
+
+
 def test(start_date,end_date):
     '''
     回测收益，按照高买低卖价格区间操作，价格区间切分5
@@ -50,10 +52,10 @@ def test(start_date,end_date):
 
 
         bigProfitList.append([stockList.iloc[i][1],tradeList[flagj],tradeList[flagk],round(flagpro)])
-        res += str(stockList.iloc[i, 1]) + '买入，卖出价   ' + str(tradeList[flagj]) + '   ' + str(tradeList[flagk + 1]) \
-               + '   获利  ' + str(flagpro) + '\n' + flagrecord
+        res += str(stockList.iloc[i, 1]) + '  买入，卖出价   ' + str(round(tradeList[flagj],2)) + '     ' + str(round(tradeList[flagk + 1],2)) \
+               + '      获利      ' + str(flagpro) + '\n'
 
-        if(i == 50):
+        if(i == 500):
             break
         print(i)
     return res,bigProfitList
