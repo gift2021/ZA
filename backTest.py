@@ -2,7 +2,7 @@ import tushare as ts
 
 
 
-# xxx
+# xxxxxxx
 ts.set_token('6a340aafdbb9232fbbbab2adf6ec0350bd70bfd87a6bf588972b323e')
 # ts.set_token('303ece62497562396a9420fb0a36201d99f1ba1bd6c7713391a5a041')
 pro = ts.pro_api()
