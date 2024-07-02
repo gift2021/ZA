@@ -44,3 +44,4 @@ def monthly(code,startDay,endDay):
 if __name__=='__main__':
     df = daily("000058.SZ",'20230202','20230210')
     print(df)
+    
