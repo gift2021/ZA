@@ -51,11 +51,12 @@ def bkt(ts_code,start_date,end_date):
     #初始收益为0
     benfite = 0
     # 交易次数
-    flag = 0
+
 
     for j in range(5):
         for k in range(5 - j):
             record = ''
+            flag = 0
             # hold=1为持有，-1为未持有
             hold = -1
             # 初始本金为10w
@@ -90,15 +91,16 @@ def bkt(ts_code,start_date,end_date):
                 maxprofit = profit
                 flagrecord = record
     trade.append(ts_code)
-    trade.append(flagbuyprice)
-    trade.append(flagsellprice)
+    trade.append(round(flagbuyprice,2))
+    trade.append(round(flagsellprice,2))
     trade.append(maxprofit)
 
 
-    return trade
+    return trade,flagrecord
 
 if __name__ == '__main__':
-    trade = bkt('000058.SZ','20180101', '20230606')
+    trade,record = bkt('002112.SZ','20230101', '20240601')
+    print(record)
     print(trade)
 
 

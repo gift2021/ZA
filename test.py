@@ -1,7 +1,7 @@
 import backTest as bkt
 import pandas as pd
 import numpy as np
-import priceIoc as pic
+
 
 # 实现遍历所有股票最近收益，从高到低排个序
 
